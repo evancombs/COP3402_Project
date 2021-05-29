@@ -72,10 +72,14 @@ void main(int argc, char** argv)
 
   while (PC < BP)
   {
+    // Fetch Cycle
     int OP = pas[PC];
     int L = pas[PC + 1];
     int M = pas[PC + 2];
 
+    PC = PC + 3
+
+    // Execute Cycle
     switch(OP)
     {
       case 1:
