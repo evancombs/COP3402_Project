@@ -88,7 +88,7 @@ void main(int argc, char** argv)
     int L = pas[PC + 1];
     int M = pas[PC + 2];
 
-    PC = PC + 3
+    PC = PC + 3;
 
     // Execute Cycle
     switch(OP)
@@ -241,5 +241,6 @@ void main(int argc, char** argv)
           // End program, set Halt to 0
         }
     }
+  }
 
 }
