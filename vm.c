@@ -64,11 +64,11 @@ void main(int argc, char** argv)
   printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
 
-  while (instr_index < BP)
+  while (PC < BP)
   {
-    int OP = IR[index];
-    int L = IR[index + 1];
-    int M = IR[index + 2];
+    int OP = pas[PC];
+    int L = pas[PC + 1];
+    int M = pas[PC + 2];
 
     switch(OP)
     {
@@ -86,7 +86,7 @@ void main(int argc, char** argv)
         // NEG
         if (M == 1)
         {
-          PAS[sp] = PAS[sp] * -1;
+          pas[sp] = pas[sp] * -1;
         }
 
         // ADD
