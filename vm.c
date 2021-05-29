@@ -13,6 +13,12 @@
 // PC = program counter
 // IR = instruction register
 
+typedef struct IR
+{
+  int OP;
+  int L;
+  int M;
+} IR;
 
 // Temp Debug Functions
 void printIntArr(int* arr, int len)
