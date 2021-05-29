@@ -26,6 +26,7 @@ int SP = 0;
 int BP = 0;
 int PC = 0;
 
+int* pas;
 // Temp Debug Functions
 void printIntArr(int* arr, int len)
 {
@@ -60,7 +61,7 @@ void main(int argc, char** argv)
 
   printf("Reading from file %s\n", argv[1]); // Debug
 
-  int* pas = calloc(MAX_PAS_LENGTH, sizeof(int));
+  pas = calloc(MAX_PAS_LENGTH, sizeof(int));
 
   // Fill up pas text portion from input file
   // EX:
