@@ -13,12 +13,18 @@
 // PC = program counter
 // IR = instruction register
 
+// Registers
 typedef struct IR
 {
   int OP;
   int L;
   int M;
 } IR;
+
+// Global
+SP = 0;
+BP = 0;
+PC = 0;
 
 // Temp Debug Functions
 void printIntArr(int* arr, int len)
@@ -50,9 +56,7 @@ void main(int argc, char** argv)
 {
   FILE *fp;
   int i;
-  SP = 0;
-  BP = 0;
-  PC = 0;
+
 
   printf("Reading from file %s\n", argv[1]); // Debug
 
