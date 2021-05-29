@@ -25,6 +25,7 @@ typedef struct IR
 int SP = 0;
 int BP = 0;
 int PC = 0;
+int Halt = 0;
 
 int* pas;
 // Temp Debug Functions
@@ -221,14 +222,17 @@ void main(int argc, char** argv)
         // Increment SP by M
         break;
 
+      // JMP, jump to instr
       case 7:
-        // JMP, jump to instr
-        // PC set to M
+        PC = M;
         break;
 
-      case 8:
         // JPC, jump to instr M if top stack val is 1
-        // PC set to M
+      case 8:
+        if (BP == 1)
+        {
+          PC = M;
+        }
         break;
 
       case 9:
@@ -251,7 +255,11 @@ void main(int argc, char** argv)
         if (M == 3)
         {
           // End program, set Halt to 0
+          Halt = 0;
+          return 0;
         }
+
+        break;
     }
   }
 
