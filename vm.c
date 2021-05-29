@@ -93,15 +93,21 @@ void main(int argc, char** argv)
     // Execute Cycle
     switch(OP)
     {
+      // LIT, pushes literal onto stack
       case 1:
-        // LIT, push literal onto stack
+        sp = sp + 1;
+        pas[sp] = M;
         break;
 
+      // OPR, arith. preformed using data @ top of stack
       case 2:
-        // OPR, arith. preformed using data @ top of stack
+
+        // RTN
         if (M == 0)
         {
-
+          sp = bp - 1;
+          bp = pas[sp + 2];
+          pc = pas[sp + 3];
         }
 
         // NEG
