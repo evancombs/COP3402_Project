@@ -34,21 +34,7 @@ void printIntArr(int* arr, int len)
 // 2 0 1
 void read(char* inputFile, char* text)
 {
-  FILE *fp;
-  int i, j;
-  char instruction[3];
-  int len;
-  int* text2 = calloc(450, sizeof(int));
 
-  fp = fopen(inputFile, "r");
-
-  for (i = 0; i < 450; i++)
-  {
-    fscanf(fp, "%d", &text2[i]);
-  }
-
-  printIntArr(text2, 450);
-  fclose(fp);
 }
 
 
@@ -67,10 +53,27 @@ void execute()
 
 void main(int argc, char** argv)
 {
-  char* text = malloc(sizeof(int) * 450);
+  FILE *fp;
+  int i, j;
+
+  // char* text = malloc(sizeof(int) * 450);
   printf("Reading from file %s\n", argv[1]);
 
   int* pas = malloc(sizeof(int) * MAX_PAS_LENGTH);
 
-  read(argv[1], text);
+  int len;
+  // int* text2 = calloc(450, sizeof(int));
+
+  fp = fopen(argv[1], "r");
+
+  for (i = 0; i < MAX_PAS_LENGTH; i++)
+  {
+    if (fscanf(fp, "%d", &pas[i]) == EOF)
+      break;
+  }
+
+  printIntArr(pas, MAX_PAS_LENGTH);
+  fclose(fp);
+
+  // read(argv[1], text);
 }
