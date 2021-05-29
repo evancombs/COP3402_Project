@@ -47,7 +47,7 @@ void main(int argc, char** argv)
   SP = 0;
   BP = 0;
   PC = 0;
-  
+
   printf("Reading from file %s\n", argv[1]); // Debug
 
   int* pas = calloc(MAX_PAS_LENGTH, sizeof(int));
@@ -64,8 +64,8 @@ void main(int argc, char** argv)
       break;
   }
 
-  sp = i;
-  bp = sp + 1;
+  SP = i;
+  BP = SP + 1;
 
   printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
@@ -92,90 +92,90 @@ void main(int argc, char** argv)
         // NEG
         if (M == 1)
         {
-          pas[sp] = pas[sp] * -1;
+          pas[SP] = pas[SP] * -1;
         }
 
         // ADD
         if (M == 2)
         {
-          sp = sp - 1;
-          pas[sp] = pas[sp] + pas[sp + 1];
+          SP = SP - 1;
+          pas[SP] = pas[SP] + pas[SP + 1];
         }
 
         // MUL
         if (M == 3)
         {
-          sp = sp - 1;
-          pas[sp] = pas[sp] + pas[sp + 1];
+          SP = SP - 1;
+          pas[SP] = pas[SP] + pas[SP + 1];
         }
 
         // DIV
         if (M == 4)
         {
-          sp = sp - 1;
-          pas[sp] = pas[sp] + pas[sp + 1];
+          SP = SP - 1;
+          pas[SP] = pas[SP] + pas[SP + 1];
         }
 
         // DIV
         if (M == 5)
         {
-          sp = sp - 1;
-          pas[sp] = pas[sp] / pas[sp - 1];
+          SP = SP - 1;
+          pas[SP] = pas[SP] / pas[SP - 1];
         }
 
         // ODD
         if (M == 6)
         {
-          pas[sp] = pas[sp] % 2;
+          pas[SP] = pas[SP] % 2;
         }
 
         // MOD
         if (M == 7)
         {
-          sp = sp - 1;
-          pas[sp] = pas[sp] % pas[sp + 1];
+          SP = SP - 1;
+          pas[SP] = pas[SP] % pas[SP + 1];
         }
 
         // EQL
         if (M == 8)
         {
-          sp = sp - 1;
-          pas[sp] = (pas[sp] == pas[sp + 1]);
+          SP = SP - 1;
+          pas[SP] = (pas[SP] == pas[SP + 1]);
         }
 
         // NEQ
         if (M == 9)
         {
-          sp = sp - 1;
-          pas[sp] = (pas[sp] != pas[sp + 1]);
+          SP = SP - 1;
+          pas[SP] = (pas[SP] != pas[SP + 1]);
         }
 
         // LSS
         if (M == 10)
         {
-          sp = sp - 1;
-          pas[sp] = pas[sp] < pas[sp + 1];
+          SP = SP - 1;
+          pas[SP] = pas[SP] < pas[SP + 1];
         }
 
         // LEQ
         if (M == 11)
         {
-          sp = sp - 1;
-          pas[sp] = (pas[sp] <= pas[sp + 1]);
+          SP = SP - 1;
+          pas[SP] = (pas[SP] <= pas[SP + 1]);
         }
 
         // GTR
         if (M == 12)
         {
-          sp = sp - 1;
-          pas[sp] = (pas[sp] > pas[sp + 1]);
+          SP = SP - 1;
+          pas[SP] = (pas[SP] > pas[SP + 1]);
         }
 
         // GEQ
         if (M == 13)
         {
-          sp = sp - 1;
-          pas[sp] = (pas[sp] >= pas[sp + 1]);
+          SP = SP - 1;
+          pas[SP] = (pas[SP] >= pas[SP + 1]);
         }
 
 
