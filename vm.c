@@ -96,7 +96,7 @@ void main(int argc, char** argv)
         // OPR, arith. preformed using data @ top of stack
         if (M == 0)
         {
-
+          
         }
 
         // NEG
