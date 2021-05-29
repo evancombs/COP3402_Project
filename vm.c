@@ -69,5 +69,8 @@ void main(int argc, char** argv)
 {
   char* text = malloc(sizeof(int) * 450);
   printf("Reading from file %s\n", argv[1]);
+
+  int* pas = malloc(sizeof(int) * MAX_PAS_LENGTH);
+
   read(argv[1], text);
 }
