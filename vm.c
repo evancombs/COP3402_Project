@@ -64,9 +64,6 @@ void main(int argc, char** argv)
   printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
 
-  read(argv[1], text);
-
-
   while (instr_index < BP)
   {
     int OP = IR[index];
