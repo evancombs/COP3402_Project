@@ -44,7 +44,10 @@ void main(int argc, char** argv)
 {
   FILE *fp;
   int i;
-
+  SP = 0;
+  BP = 0;
+  PC = 0;
+  
   printf("Reading from file %s\n", argv[1]); // Debug
 
   int* pas = calloc(MAX_PAS_LENGTH, sizeof(int));
@@ -60,6 +63,9 @@ void main(int argc, char** argv)
     if (fscanf(fp, "%d", &pas[i]) == EOF)
       break;
   }
+
+  sp = i;
+  bp = sp + 1;
 
   printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
