@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+#define MAX_PAS_LENGTH 500
 // BP = base pointer
 // SP = stack pointer
 // PC = program counter
