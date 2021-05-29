@@ -235,11 +235,17 @@ void main(int argc, char** argv)
         if (M == 1)
         {
           // Write top stack val to screen
+          printf("Top of Stack Value:")
+          printf("%d", pas[sp]);
+          sp = sp - 1;
         }
 
         if (M == 2)
         {
           // Read user input & store @ top of stack
+          printf("Please Enter and Integer:")
+          sp = sp + 1;
+          scanf("%d", pas[sp]);
         }
 
         if (M == 3)
