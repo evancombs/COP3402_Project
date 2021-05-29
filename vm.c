@@ -27,7 +27,17 @@ void printIntArr(int* arr, int len)
   return;
 }
 
-
+// From HW1 Instructions, Appendix D
+int base(int L)
+{
+	int arb = BP;	// arb = activation record base
+	while ( L > 0)     //find base L levels down
+	{
+		arb = pas[arb];
+		L--;
+	}
+	return arb;
+}
 
 
 void main(int argc, char** argv)
