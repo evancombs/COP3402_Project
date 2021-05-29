@@ -27,51 +27,43 @@ void printIntArr(int* arr, int len)
   return;
 }
 
-// Takes in an input file name and an empty text array, and fills
-// in each instruction from the input file
-// EX:
-// 3 0 4         ----->        [3][0][4][2][0][1]...    etc.
-// 2 0 1
-void read(char* inputFile, char* text)
+// From HW1 Instructions, Appendix D
+int base(int L)
 {
-  FILE *fp;
-  int i, j;
-  char instruction[3];
-  int len;
-  int* text2 = calloc(450, sizeof(int));
-
-  fp = fopen(inputFile, "r");
-
-  for (i = 0; i < 450; i++)
-  {
-    fscanf(fp, "%d", &text2[i]);
-  }
-
-  printIntArr(text2, 450);
-  fclose(fp);
+	int arb = BP;	// arb = activation record base
+	while ( L > 0)     //find base L levels down
+	{
+		arb = pas[arb];
+		L--;
+	}
+	return arb;
 }
 
-
-
-
-// Takes in the name of the input file, the position to read from, and
-void fetch(char* input, int PC, char** IR)
-{
-
-}
-
-void execute()
-{
-
-}
 
 void main(int argc, char** argv)
 {
-  char* text = malloc(sizeof(int) * 450);
-  printf("Reading from file %s\n", argv[1]);
+  FILE *fp;
+  int i;
+
+  printf("Reading from file %s\n", argv[1]); // Debug
 
   int* pas = malloc(sizeof(int) * MAX_PAS_LENGTH);
 
+  // Fill up pas text portion from input file
+  // EX:
+  // 3 0 4         ----->        [3][0][4][2][0][1]...    etc.
+  // 2 0 1
+  fp = fopen(argv[1], "r");
+
+  for (i = 0; i < MAX_PAS_LENGTH; i++)
+  {
+    if (fscanf(fp, "%d", &pas[i]) == EOF)
+      break;
+  }
+
+  printIntArr(pas, MAX_PAS_LENGTH); // Debug
+  fclose(fp);
+  
   read(argv[1], text);
 
 
