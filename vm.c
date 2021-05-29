@@ -47,7 +47,7 @@ void main(int argc, char** argv)
 
   printf("Reading from file %s\n", argv[1]); // Debug
 
-  int* pas = malloc(sizeof(int) * MAX_PAS_LENGTH);
+  int* pas = calloc(MAX_PAS_LENGTH, sizeof(int));
 
   // Fill up pas text portion from input file
   // EX:
