@@ -22,9 +22,9 @@ typedef struct IR
 } IR;
 
 // Global
-SP = 0;
-BP = 0;
-PC = 0;
+int SP = 0;
+int BP = 0;
+int PC = 0;
 
 // Temp Debug Functions
 void printIntArr(int* arr, int len)
