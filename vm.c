@@ -27,43 +27,22 @@ void printIntArr(int* arr, int len)
   return;
 }
 
-// Takes in an input file name and an empty text array, and fills
-// in each instruction from the input file
-// EX:
-// 3 0 4         ----->        [3][0][4][2][0][1]...    etc.
-// 2 0 1
-void read(char* inputFile, char* text)
-{
-
-}
 
 
-
-
-// Takes in the name of the input file, the position to read from, and
-void fetch(char* input, int PC, char** IR)
-{
-
-}
-
-void execute()
-{
-
-}
 
 void main(int argc, char** argv)
 {
   FILE *fp;
-  int i, j;
+  int i;
 
-  // char* text = malloc(sizeof(int) * 450);
-  printf("Reading from file %s\n", argv[1]);
+  printf("Reading from file %s\n", argv[1]); // Debug
 
   int* pas = malloc(sizeof(int) * MAX_PAS_LENGTH);
 
-  int len;
-  // int* text2 = calloc(450, sizeof(int));
-
+  // Fill up pas text portion from input file
+  // EX:
+  // 3 0 4         ----->        [3][0][4][2][0][1]...    etc.
+  // 2 0 1
   fp = fopen(argv[1], "r");
 
   for (i = 0; i < MAX_PAS_LENGTH; i++)
@@ -72,8 +51,5 @@ void main(int argc, char** argv)
       break;
   }
 
-  printIntArr(pas, MAX_PAS_LENGTH);
+  printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
-
-  // read(argv[1], text);
-}
