@@ -45,7 +45,7 @@ void printIntArr(int* arr, int len)
 int base(int L)
 {
 	int arb = BP;	// arb = activation record base
-	while ( L > 0)     //find base L levels down
+	while (L > 0)     //find base L levels down
 	{
 		arb = pas[arb];
 		L--;
@@ -176,7 +176,7 @@ void main(int argc, char** argv)
         else if (M == 10)
         {
           SP = SP - 1;
-          pas[SP] = pas[SP] < pas[SP + 1];
+          pas[SP] = (pas[SP] < pas[SP + 1]);
         }
 
         // LEQ
@@ -205,26 +205,37 @@ void main(int argc, char** argv)
           Halt = 1;
         }
 
-
         break;
 
+      // LOD, load val to top of stack from offset M of L levels down
       case 3:
-        // LOD, load val to top of stack from offset M of L levels down(???)
+        sp = sp - 1;
+        pas[sp] = pas[base(L) + M];
         break;
 
+      // STO, store val from top of stack to an index @ offset M from L levels down
       case 4:
-        // STO, store val from top of stack to an index @ offset M from L levels down (???)
+        pas[base(L) + M] = pas[sp];
+        sp = sp - 1;
         break;
 
       case 5:
         // CAL, calls procedure (another name for function/method) @ index M
         // Generates new activation record (???) and PC is set to M
+
+        pas[sp + 1] = base(L);
+        pas[sp + 2] = BP;
+        pas[sp + 3] = PC;
+        BP = sp + 1;
+        PC = M;
         break;
 
       case 6:
         // INC, allocate M number of memory words. First 4 are reserved for:
         // Static Link, Dynamic Link, Return Address, and Parameter
         // Increment SP by M
+
+        sp = sp + M;
         break;
 
       // JMP, jump to instr
@@ -234,9 +245,10 @@ void main(int argc, char** argv)
 
         // JPC, jump to instr M if top stack val is 1
       case 8:
-        if (BP == 1)
+        if (pas[sp] == 1)
         {
           PC = M;
+          sp = sp - 1;
         }
         break;
 
