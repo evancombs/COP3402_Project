@@ -72,18 +72,23 @@ void main(int argc, char** argv)
 
   for (i = 0; i < MAX_PAS_LENGTH; i++)
   {
+    printf("i = %d\n", i);
     if (fscanf(fp, "%d", &pas[i]) == EOF)
       break;
+
+    printf("finished loop\n");
   }
 
 
-  SP = i;
+  SP = i - 1;
   BP = SP + 1;
 
   printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
 
   printf("\n\n");
+  printf("                PC   BP    SP   stack\n");
+  printf("Initial values: %d    %d    %d\n\n", PC, BP, SP);
   while (PC < BP)
   {
     // Fetch Cycle
@@ -285,10 +290,8 @@ void main(int argc, char** argv)
         if (instruction_register.M == 1)
         {
           // Write top stack val to screen
-          printf("Top of Stack Value:");
-          printf("%d", pas[SP]);
+          printf("Output result is: %d\n", pas[SP]);
           SP = SP - 1;
-          printf("\n");
           printf("SYS");
         }
 
@@ -298,7 +301,7 @@ void main(int argc, char** argv)
           printf("Please Enter an Integer: ");
           SP = SP + 1;
           scanf("%d", &pas[SP]);
-          printf("\n");
+          //printf("\n");
           printf("SYS");
         }
 
