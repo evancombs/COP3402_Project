@@ -112,92 +112,97 @@ void main(int argc, char** argv)
         }
 
         // NEG
-        if (M == 1)
+        else if (M == 1)
         {
           pas[SP] = pas[SP] * -1;
         }
 
         // ADD
-        if (M == 2)
+        else if (M == 2)
         {
           SP = SP - 1;
           pas[SP] = pas[SP] + pas[SP + 1];
         }
 
         // MUL
-        if (M == 3)
+        else if (M == 3)
         {
           SP = SP - 1;
           pas[SP] = pas[SP] + pas[SP + 1];
         }
 
         // DIV
-        if (M == 4)
+        else if (M == 4)
         {
           SP = SP - 1;
           pas[SP] = pas[SP] + pas[SP + 1];
         }
 
         // DIV
-        if (M == 5)
+        else if (M == 5)
         {
           SP = SP - 1;
           pas[SP] = pas[SP] / pas[SP - 1];
         }
 
         // ODD
-        if (M == 6)
+        else if (M == 6)
         {
           pas[SP] = pas[SP] % 2;
         }
 
         // MOD
-        if (M == 7)
+        else if (M == 7)
         {
           SP = SP - 1;
           pas[SP] = pas[SP] % pas[SP + 1];
         }
 
         // EQL
-        if (M == 8)
+        else if (M == 8)
         {
           SP = SP - 1;
           pas[SP] = (pas[SP] == pas[SP + 1]);
         }
 
         // NEQ
-        if (M == 9)
+        else if (M == 9)
         {
           SP = SP - 1;
           pas[SP] = (pas[SP] != pas[SP + 1]);
         }
 
         // LSS
-        if (M == 10)
+        else if (M == 10)
         {
           SP = SP - 1;
           pas[SP] = pas[SP] < pas[SP + 1];
         }
 
         // LEQ
-        if (M == 11)
+        else if (M == 11)
         {
           SP = SP - 1;
           pas[SP] = (pas[SP] <= pas[SP + 1]);
         }
 
         // GTR
-        if (M == 12)
+        else if (M == 12)
         {
           SP = SP - 1;
           pas[SP] = (pas[SP] > pas[SP + 1]);
         }
 
         // GEQ
-        if (M == 13)
+        else if (M == 13)
         {
           SP = SP - 1;
           pas[SP] = (pas[SP] >= pas[SP + 1]);
+        }
+
+        else
+        {
+          Halt = 1;
         }
 
 
@@ -244,7 +249,7 @@ void main(int argc, char** argv)
           sp = sp - 1;
         }
 
-        if (M == 2)
+        else if (M == 2)
         {
           // Read user input & store @ top of stack
           printf("Please Enter and Integer:")
@@ -252,14 +257,23 @@ void main(int argc, char** argv)
           scanf("%d", pas[sp]);
         }
 
-        if (M == 3)
+        else if (M == 3)
         {
           // End program, set Halt to 0
           Halt = 0;
           return 0;
         }
 
+        else
+        {
+          Halt = 1;
+        }
+
         break;
+
+        default:
+          Halt = 1;
+          break;
     }
   }
 
