@@ -58,7 +58,7 @@ void main(int argc, char** argv)
 {
   FILE *fp;
   int i;
-
+  IR instruction_register;
 
   printf("Reading from file %s\n", argv[1]); // Debug
 
@@ -76,6 +76,8 @@ void main(int argc, char** argv)
       break;
   }
 
+  
+
   SP = i;
   BP = SP + 1;
 
@@ -85,9 +87,12 @@ void main(int argc, char** argv)
   while (PC < BP)
   {
     // Fetch Cycle
-    int OP = pas[PC];
-    int L = pas[PC + 1];
-    int M = pas[PC + 2];
+    instruction_register.OP = pas[PC];
+    instruction_register.L = pas[PC + 1];
+    instruction_register.M = pas[PC + 2];
+    //int OP = pas[PC];
+    //int L = pas[PC + 1];
+    //int M = pas[PC + 2];
 
     PC = PC + 3;
 
