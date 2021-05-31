@@ -104,7 +104,7 @@ void main(int argc, char** argv)
       printf(" ");
     }
 
-    printf("%d ", PC);
+    //printf("%d ", PC);
     PC = PC + 3;
 
     // Execute Cycle
@@ -112,6 +112,7 @@ void main(int argc, char** argv)
     {
       // LIT, pushes literal onto stack
       case 1:
+        printf("%d ", PC - 3);
         printf("LIT");
         SP = SP + 1;
         pas[SP] = instruction_register.M;
@@ -119,6 +120,8 @@ void main(int argc, char** argv)
 
       // OPR, arith. preformed using data @ top of stack
       case 2:
+        printf("%d ", PC - 3);
+
         // RTN
         if (instruction_register.M == 0)
         {
@@ -239,6 +242,7 @@ void main(int argc, char** argv)
 
       // LOD, load val to top of stack from offset M of L levels down
       case 3:
+        printf("%d ", PC - 3);
         printf("LOD");
         SP = SP - 1;
         pas[SP] = pas[base(instruction_register.L) + instruction_register.M];
@@ -246,6 +250,7 @@ void main(int argc, char** argv)
 
       // STO, store val from top of stack to an index @ offset M from L levels down
       case 4:
+        printf("%d ", PC - 3);
         printf("STO");
         pas[base(instruction_register.L) + instruction_register.M] = pas[SP];
         SP = SP - 1;
@@ -254,6 +259,7 @@ void main(int argc, char** argv)
       case 5:
         // CAL, calls procedure (another name for function/method) @ index M
         // Generates new activation record (???) and PC is set to M
+        printf("%d ", PC - 3);
         printf("CAL");
         pas[SP + 1] = base(instruction_register.L);
         pas[SP + 2] = BP;
@@ -266,18 +272,21 @@ void main(int argc, char** argv)
         // INC, allocate M number of memory words. First 4 are reserved for:
         // Static Link, Dynamic Link, Return Address, and Parameter
         // Increment SP by M
+        printf("%d ", PC - 3);
         printf("INC");
         SP = SP + instruction_register.M;
         break;
 
       // JMP, jump to instr
       case 7:
+        printf("%d ", PC - 3);
         printf("JMP");
         PC = instruction_register.M;
         break;
 
         // JPC, jump to instr M if top stack val is 1
       case 8:
+        printf("%d ", PC - 3);
         printf("JPC");
         if (pas[SP] == 1)
         {
@@ -292,6 +301,7 @@ void main(int argc, char** argv)
           // Write top stack val to screen
           printf("Output result is: %d\n", pas[SP]);
           SP = SP - 1;
+          printf("%d ", PC - 3);
           printf("SYS");
         }
 
@@ -302,6 +312,7 @@ void main(int argc, char** argv)
           SP = SP + 1;
           scanf("%d", &pas[SP]);
           //printf("\n");
+          printf("%d ", PC - 3);
           printf("SYS");
         }
 
@@ -309,7 +320,8 @@ void main(int argc, char** argv)
         {
           // End program, set Halt to 0
           Halt = 0;
-          printf("SYS END");
+          printf("%d ", PC - 3);
+          printf("SYS");
           return;
         }
 
@@ -332,7 +344,9 @@ void main(int argc, char** argv)
     // SP starts as the index of the last M value of the last instruction,
     // while BP is the index after that. If the stack is length 1 then both
     // SP and BP hold the same index.
-    for (i = 0; i < (SP - BP); i++)
+
+    printf("\nSP = %d\nBP = %d\n", SP, BP);
+    for (i = 0; i <= (SP - BP); i++)
     {
       printf("%d ", pas[BP + i]);
     }
