@@ -27,6 +27,8 @@ int BP = 0;
 int PC = 0;
 int Halt = 0;
 
+int debug = 0; // TODO: REMOVE before submit
+
 int* pas;
 // Temp Debug Functions
 void printIntArr(int* arr, int len)
@@ -60,7 +62,8 @@ void main(int argc, char** argv)
   int i;
   IR instruction_register;
 
-  printf("Reading from file %s\n", argv[1]); // Debug
+  if (debug)
+    printf("Reading from file %s\n", argv[1]); // Debug
 
   pas = calloc(MAX_PAS_LENGTH, sizeof(int));
 
@@ -72,11 +75,14 @@ void main(int argc, char** argv)
 
   for (i = 0; i < MAX_PAS_LENGTH; i++)
   {
-    printf("i = %d\n", i);
+    if (debug)
+      printf("i = %d\n", i);
+
     if (fscanf(fp, "%d", &pas[i]) == EOF)
       break;
 
-    printf("finished loop\n");
+    if (debug)
+      printf("finished loop\n");
   }
 
 
@@ -135,7 +141,7 @@ void main(int argc, char** argv)
         else if (instruction_register.M == 1)
         {
           printf("NEG");
-          pas[SP] = pas[SP] * -1;
+          pas[SP] = (pas[SP] * (-1));
         }
 
         // ADD
@@ -337,15 +343,15 @@ void main(int argc, char** argv)
           break;
     }
 
-    printf("  %d  %d    ", instruction_register.L, instruction_register.M);
-    printf("%d   %d   %d   ", PC, BP, SP);
+    printf("%3d%3d    ", instruction_register.L, instruction_register.M);
+    printf("%4d %4d %4d   ", PC, BP, SP);
 
     // potential issue where SP and BP are equal so it prints nothing
     // SP starts as the index of the last M value of the last instruction,
     // while BP is the index after that. If the stack is length 1 then both
     // SP and BP hold the same index.
-
-    printf("\nSP = %d\nBP = %d\n", SP, BP);
+    if (debug)
+      printf("\nSP = %d\nBP = %d\n", SP, BP);
     for (i = 0; i <= (SP - BP); i++)
     {
       printf("%d ", pas[BP + i]);
