@@ -250,7 +250,7 @@ void main(int argc, char** argv)
       case 3:
         printf("%d ", PC - 3);
         printf("LOD");
-        SP = SP - 1;
+        SP = SP + 1;
         pas[SP] = pas[base(instruction_register.L) + instruction_register.M];
         break;
 
