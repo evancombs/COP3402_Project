@@ -212,7 +212,11 @@ void main(int argc, char** argv)
         {
           printf("LSS");
           SP = SP - 1;
-          pas[SP] = (pas[SP] < pas[SP + 1]);
+          // pas[SP] = (pas[SP] < pas[SP + 1]);
+          if (pas[SP] = pas[SP] < pas[SP + 1])
+            pas[SP] = 1;
+          else
+            pas[SP] = 0;
         }
 
         // LEQ
@@ -297,8 +301,8 @@ void main(int argc, char** argv)
         if (pas[SP] == 1)
         {
           PC = instruction_register.M;
-          SP = SP - 1;
         }
+        SP = SP - 1;
         break;
 
       case 9:
