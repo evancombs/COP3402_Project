@@ -375,29 +375,29 @@ int main(int argc, char** argv)
     //{
     //  printf("%d ", pas[BP + i]);
     // }
-    for (int i = instr_end; i < BP; i++) // print the stack
+    for (int i = instr_end; i <= SP; i++) // print the stack
     {
       printf("%-2d ", pas[i]);
     }
 
     //printf("\ninstr_end = %d\nSP = %d\nBP = %d\n", instr_end, SP, BP);
-    for (int i = BP; i <= SP; i += 3)
-      {
-      if (instr_end < BP && instruction_register.OP != 5)
-        printf("%2c", '|');
+    //if (instr_end < BP && instruction_register.OP != 5)
+      //;//printf("%2c", '|');
 
+    /*
+    for (i = BP; i < SP; i++)
+    {
+      //if (i == BP)
+      //printf("%2c", '|');
+      printf("%-2d ", pas[i]);
+    }*/
 
-      for (j = i; j <= i + 3; j++)
-      {
-        //if (i == BP)
-        printf("%-2d ", pas[j]);
-      }
-
-      //printf("\nBP val: %d", pas[BP]);
-      //printf("\nSP val: %d", pas[SP]);
-      // printf("\n");
-      //printIntArr(pas,72);
-    }
+    //printf("\nBP val: %d", pas[BP]);
+    //printf("\nSP val: %d", pas[SP]);
+    // printf("\n");
+    printf("\n");
+    //printIntArr(pas,72);
+    //printIntArr(pas,128);
     printf("\n");
   }
 
