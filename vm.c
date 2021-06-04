@@ -208,7 +208,7 @@ int main(int argc, char** argv)
         {
           printf("EQL");
           SP = SP - 1;
-          pas[SP] = (pas[SP] == pas[SP + 1]);
+          pas[SP] = !(pas[SP] == pas[SP + 1]);
         }
 
         // NEQ
@@ -216,7 +216,7 @@ int main(int argc, char** argv)
         {
           printf("NEQ");
           SP = SP - 1;
-          pas[SP] = (pas[SP] != pas[SP + 1]);
+          pas[SP] = !(pas[SP] != pas[SP + 1]);
         }
 
         // LSS
@@ -225,10 +225,13 @@ int main(int argc, char** argv)
           printf("LSS");
           SP = SP - 1;
           // pas[SP] = (pas[SP] < pas[SP + 1]);
+          /*
           if (pas[SP] = pas[SP] < pas[SP + 1])
-            pas[SP] = 1;
-          else
             pas[SP] = 0;
+          else
+            pas[SP] = 1;
+            */
+          pas[SP] = !(pas[SP] < pas[SP + 1]);
         }
 
         // LEQ
@@ -236,7 +239,7 @@ int main(int argc, char** argv)
         {
           printf("LEQ");
           SP = SP - 1;
-          pas[SP] = (pas[SP] <= pas[SP + 1]);
+          pas[SP] = !(pas[SP] <= pas[SP + 1]);
         }
 
         // GTR
@@ -244,7 +247,7 @@ int main(int argc, char** argv)
         {
           printf("GTR");
           SP = SP - 1;
-          pas[SP] = (pas[SP] > pas[SP + 1]);
+          pas[SP] = !(pas[SP] > pas[SP + 1]);
         }
 
         // GEQ
@@ -252,7 +255,7 @@ int main(int argc, char** argv)
         {
           printf("GEQ");
           SP = SP - 1;
-          pas[SP] = (pas[SP] >= pas[SP + 1]);
+          pas[SP] = !(pas[SP] >= pas[SP + 1]);
         }
 
         else
@@ -310,6 +313,7 @@ int main(int argc, char** argv)
       case 8:
         printf("%d ", PC - 3);
         printf("JPC");
+
         if (pas[SP] == 1)
         {
           PC = instruction_register.M;
