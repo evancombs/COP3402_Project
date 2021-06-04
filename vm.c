@@ -58,7 +58,7 @@ int base(int L)
 }
 
 
-void main(int argc, char** argv)
+int main(int argc, char** argv)
 {
   FILE *fp;
   int i;
@@ -91,10 +91,10 @@ void main(int argc, char** argv)
   SP = i - 1;
   BP = SP + 1;
 
-  printIntArr(pas, MAX_PAS_LENGTH); // Debug
+  //printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
 
-  printf("\n\n");
+  //printf("\n\n");
   printf("                PC   BP    SP   stack\n");
   printf("Initial values: %d    %d    %d\n\n", PC, BP, SP);
   while (PC < BP)
@@ -393,4 +393,5 @@ void main(int argc, char** argv)
     //printIntArr(pas,72);
   }
 
+  return 0;
 }
