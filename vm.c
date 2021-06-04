@@ -25,6 +25,8 @@ typedef struct IR
 int SP = 0;
 int BP = 0;
 int PC = 0;
+int STACK_LEN = 0;
+int is_first_inc = 1;
 int Halt = 0;
 
 int instr_end = 0;
@@ -297,6 +299,12 @@ int main(int argc, char** argv)
         // INC, allocate M number of memory words. First 4 are reserved for:
         // Static Link, Dynamic Link, Return Address, and Parameter
         // Increment SP by M
+        if (is_first_inc)
+        {
+          STACK_LEN = instruction_register.M;
+          is_first_inc = 0;
+        }
+        printf("STACK_LEN = %d\n", STACK_LEN);
         printf("%d ", PC - 3);
         printf("INC");
         SP = SP + instruction_register.M;
@@ -377,23 +385,24 @@ int main(int argc, char** argv)
     // }
     for (int i = instr_end; i <= SP; i++) // print the stack
     {
-      printf("%-2d ", pas[i]);
+      //printf("%-2d ", pas[i]);
     }
 
-    for (i = instr_end; i < SP; i++)
+    for (i = instr_end; i <= SP; i++)
     {
+      //printf("i = %d\n", i);
       printf("%d ", pas[i]);
 
-      if (i == STACK_LEN)
+      if (i == instr_end + STACK_LEN)
       {
-        printf(" | ")
+        printf(" | ");
       }
 
-      if (i >= STACK_LEN && i < BP)
+      else if (i >= STACK_LEN && i < BP)
       {
         if ((i - STACK_LEN) % 3 == 0)
         {
-          printf(" | ")
+          printf(" | ");
         }
       }
     }
