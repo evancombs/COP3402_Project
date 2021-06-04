@@ -371,14 +371,19 @@ void main(int argc, char** argv)
     //{
     //  printf("%d ", pas[BP + i]);
     // }
-    for (int i = instr_end; i <= BP; i++)
-      printf("%d ", pas[i]);
+    for (int i = instr_end; i < BP; i++)
+    {
+      printf("%-2d ", pas[i]);
+    }
+    if (instr_end < BP)
+      printf("%2c", '|');
+
 
     for (i = BP; i <= SP; i++) // This prints correctly
     {
-      if (i == BP)
-        printf("|");
-      printf("%d ", pas[i]);
+      //if (i == BP)
+
+      printf("%-2d ", pas[i]);
     }
 
     //printf("\nBP val: %d", pas[BP]);
