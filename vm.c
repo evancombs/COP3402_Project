@@ -185,7 +185,7 @@ int main(int argc, char** argv)
         {
           printf("DIV");
           SP = SP - 1;
-          pas[SP] = pas[SP] / pas[SP - 1];
+          pas[SP] = pas[SP] / pas[SP + 1];
         }
 
         // ODD
