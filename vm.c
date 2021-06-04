@@ -380,6 +380,23 @@ int main(int argc, char** argv)
       printf("%-2d ", pas[i]);
     }
 
+    for (i = instr_end; i < SP; i++)
+    {
+      printf("%d ", pas[i]);
+
+      if (i == STACK_LEN)
+      {
+        printf(" | ")
+      }
+
+      if (i >= STACK_LEN && i < BP)
+      {
+        if ((i - STACK_LEN) % 3 == 0)
+        {
+          printf(" | ")
+        }
+      }
+    }
     //printf("\ninstr_end = %d\nSP = %d\nBP = %d\n", instr_end, SP, BP);
     //if (instr_end < BP && instruction_register.OP != 5)
       //;//printf("%2c", '|');
