@@ -23,4 +23,17 @@ else
 fi
 
 
- 
+echo -n "Testing fact.txt : "
+./a.out fact.txt <<< '5' > output.txt
+executed=$?
+if [[ $executed !=  0 ]]; then
+	echo "crashed"
+	exit 1
+fi
+diff -w -B output.txt fout.txt &> /dev/null
+correct=$?
+if [[ $correct != 0 ]]; then
+	echo "incorrect output"
+else
+	echo "pass"
+fi
