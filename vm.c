@@ -113,6 +113,16 @@ void main(int argc, char** argv)
     //printf("%d ", PC);
     PC = PC + 3;
 
+    if (debug)
+    {
+      printf("\n***beginning of entire stack***: ");
+      for (i = 0; i < MAX_PAS_LENGTH - BP; i++)
+      {
+        printf("%d ", pas[BP + i]);
+      }
+      printf("***end of entire stack***\n");
+    }
+
     // Execute Cycle
     switch(instruction_register.OP)
     {
@@ -332,7 +342,6 @@ void main(int argc, char** argv)
           Halt = 0;
           printf("%d ", PC - 3);
           printf("SYS");
-          return;
         }
 
         else
