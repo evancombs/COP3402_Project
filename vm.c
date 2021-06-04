@@ -27,6 +27,8 @@ int BP = 0;
 int PC = 0;
 int Halt = 0;
 
+int instr_end = 0;
+
 int debug = 0; // TODO: REMOVE before submit
 
 int* pas;
@@ -85,7 +87,7 @@ void main(int argc, char** argv)
       printf("finished loop\n");
   }
 
-
+  instr_end = i;
   SP = i - 1;
   BP = SP + 1;
 
@@ -365,12 +367,24 @@ void main(int argc, char** argv)
     // SP and BP hold the same index.
     if (debug)
       printf("\nSP = %d\nBP = %d\n", SP, BP);
-    for (i = 0; i <= (SP - BP); i++)
+    //for (i = 0; i <= (SP - BP); i++)
+    //{
+    //  printf("%d ", pas[BP + i]);
+    // }
+    for (int i = instr_end; i <= BP; i++)
+      printf("%d ", pas[i]);
+
+    for (i = BP; i <= SP; i++) // This prints correctly
     {
-      printf("%d ", pas[BP + i]);
+      if (i == BP)
+        printf("|");
+      printf("%d ", pas[i]);
     }
 
+    //printf("\nBP val: %d", pas[BP]);
+    //printf("\nSP val: %d", pas[SP]);
     printf("\n");
+    //printIntArr(pas,72);
   }
 
 }
