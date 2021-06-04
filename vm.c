@@ -393,14 +393,14 @@ int main(int argc, char** argv)
       //printf("i = %d\n", i);
       printf("%d ", pas[i]);
 
-      if (i == instr_end + STACK_LEN)
+      if (i == instr_end + STACK_LEN -  1)
       {
         printf(" | ");
       }
 
-      else if (i >= STACK_LEN && i < BP)
+      else if (i >= instr_end + STACK_LEN -  1 && i < BP)
       {
-        if ((i - STACK_LEN) % 3 == 0)
+        if ((i - STACK_LEN - 2) % 3 == 0)
         {
           printf(" | ");
         }
