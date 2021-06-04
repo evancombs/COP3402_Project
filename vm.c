@@ -330,7 +330,7 @@ int main(int argc, char** argv)
         else if (instruction_register.M == 2)
         {
           // Read user input & store @ top of stack
-          printf("Please Enter an Integer: ");
+          printf("Please Enter an Integer:\n");
           SP = SP + 1;
           scanf("%d", &pas[SP]);
           //printf("\n");
