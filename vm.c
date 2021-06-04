@@ -375,14 +375,15 @@ void main(int argc, char** argv)
     {
       printf("%-2d ", pas[i]);
     }
-    if (instr_end < BP)
+
+    //printf("\ninstr_end = %d\nSP = %d\nBP = %d\n", instr_end, SP, BP);
+    if (instr_end < BP && instruction_register.OP != 5)
       printf("%2c", '|');
 
 
     for (i = BP; i <= SP; i++) // This prints correctly
     {
       //if (i == BP)
-
       printf("%-2d ", pas[i]);
     }
 
