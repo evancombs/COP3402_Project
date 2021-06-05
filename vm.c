@@ -26,32 +26,17 @@ int SP = 0;
 int BP = 0;
 int PC = 0;
 int STACK_LEN = 0;
+
 int is_first_inc = 1;
-int Halt = 0;
-
 int instr_end = 0;
-
-int debug = 0; // TODO: REMOVE before submit
-
+int Halt = 0;
 int* pas;
-// Temp Debug Functions
-void printIntArr(int* arr, int len)
-{
-  int i;
-
-  for (i = 0; i < len; i++)
-  {
-    printf("%d ", arr[i]);
-  }
-  printf("\n");
-  return;
-}
 
 // From HW1 Instructions, Appendix D
 int base(int L)
 {
-	int arb = BP;	// arb = activation record base
-	while (L > 0)     //find base L levels down
+	int arb = BP;
+	while (L > 0)
 	{
 		arb = pas[arb];
 		L--;
@@ -66,37 +51,22 @@ int main(int argc, char** argv)
   int i,j;
   IR instruction_register;
 
-  if (debug)
-    printf("Reading from file %s\n", argv[1]); // Debug
-
   pas = calloc(MAX_PAS_LENGTH, sizeof(int));
 
-  // Fill up pas text portion from input file
-  // EX:
-  // 3 0 4         ----->        [3][0][4][2][0][1]...    etc.
-  // 2 0 1
   fp = fopen(argv[1], "r");
 
+  // Reads instructions from file into pas array
   for (i = 0; i < MAX_PAS_LENGTH; i++)
   {
-    if (debug)
-      printf("i = %d\n", i);
-
     if (fscanf(fp, "%d", &pas[i]) == EOF)
       break;
-
-    if (debug)
-      printf("finished loop\n");
   }
 
   instr_end = i;
   SP = i - 1;
   BP = SP + 1;
 
-  //printIntArr(pas, MAX_PAS_LENGTH); // Debug
   fclose(fp);
-
-  //printf("\n\n");
   printf("                PC   BP    SP   stack\n");
   printf("Initial values: %d    %d    %d\n\n", PC, BP, SP);
   while (PC < BP)
@@ -105,27 +75,13 @@ int main(int argc, char** argv)
     instruction_register.OP = pas[PC];
     instruction_register.L = pas[PC + 1];
     instruction_register.M = pas[PC + 2];
-    //int OP = pas[PC];
-    //int L = pas[PC + 1];
-    //int M = pas[PC + 2];
 
     if (PC / 10 == 0)
     {
       printf(" ");
     }
 
-    //printf("%d ", PC);
     PC = PC + 3;
-
-    if (debug)
-    {
-      printf("\n***beginning of entire stack***: ");
-      for (i = 0; i < MAX_PAS_LENGTH - BP; i++)
-      {
-        printf("%d ", pas[BP + i]);
-      }
-      printf("***end of entire stack***\n");
-    }
 
     // Execute Cycle
     switch(instruction_register.OP)
@@ -138,7 +94,7 @@ int main(int argc, char** argv)
         pas[SP] = instruction_register.M;
         break;
 
-      // OPR, arith. preformed using data @ top of stack
+      // OPR, arithmetic performed using data from top of stack
       case 2:
         printf("%d ", PC - 3);
 
@@ -151,14 +107,14 @@ int main(int argc, char** argv)
           PC = pas[SP + 3];
         }
 
-        // NEG
+        // NEG, negates value at top of stack
         else if (instruction_register.M == 1)
         {
           printf("NEG");
           pas[SP] = (pas[SP] * (-1));
         }
 
-        // ADD
+        // ADD, adds top and 2nd to top values on stack
         else if (instruction_register.M == 2)
         {
           printf("ADD");
@@ -166,7 +122,7 @@ int main(int argc, char** argv)
           pas[SP] = pas[SP] + pas[SP + 1];
         }
 
-        // SUB
+        // SUB, subtracts top and 2nd to top values on stack
         else if (instruction_register.M == 3)
         {
           printf("SUB");
@@ -174,7 +130,7 @@ int main(int argc, char** argv)
           pas[SP] = pas[SP] - pas[SP + 1];
         }
 
-        // MUL
+        // MUL, multiplies top and 2nd to top values on stack
         else if (instruction_register.M == 4)
         {
           printf("MUL");
@@ -182,7 +138,7 @@ int main(int argc, char** argv)
           pas[SP] = pas[SP] * pas[SP + 1];
         }
 
-        // DIV
+        // DIV, divides 2nd to top value from the top value in the stack
         else if (instruction_register.M == 5)
         {
           printf("DIV");
@@ -190,14 +146,14 @@ int main(int argc, char** argv)
           pas[SP] = pas[SP] / pas[SP + 1];
         }
 
-        // ODD
+        // ODD, if top of stack is odd, it is replaced with a 1
         else if (instruction_register.M == 6)
         {
           printf("ODD");
           pas[SP] = pas[SP] % 2;
         }
 
-        // MOD
+        // MOD, modulo the 2nd to top value by the top value of stack
         else if (instruction_register.M == 7)
         {
           printf("MOD");
@@ -205,7 +161,7 @@ int main(int argc, char** argv)
           pas[SP] = pas[SP] % pas[SP + 1];
         }
 
-        // EQL
+        // EQL, if top and 2nd to top values in stack are equal, top is replaced with a 0
         else if (instruction_register.M == 8)
         {
           printf("EQL");
@@ -213,7 +169,7 @@ int main(int argc, char** argv)
           pas[SP] = !(pas[SP] == pas[SP + 1]);
         }
 
-        // NEQ
+        // NEQ, if top and 2nd to top values in stack are NOT equal, top is replaced with a 0
         else if (instruction_register.M == 9)
         {
           printf("NEQ");
@@ -221,22 +177,15 @@ int main(int argc, char** argv)
           pas[SP] = !(pas[SP] != pas[SP + 1]);
         }
 
-        // LSS
+        // LSS, if 2nd to top stack value is less than top of stack value, top of stack is replaced with a 0
         else if (instruction_register.M == 10)
         {
           printf("LSS");
           SP = SP - 1;
-          // pas[SP] = (pas[SP] < pas[SP + 1]);
-          /*
-          if (pas[SP] = pas[SP] < pas[SP + 1])
-            pas[SP] = 0;
-          else
-            pas[SP] = 1;
-            */
           pas[SP] = !(pas[SP] < pas[SP + 1]);
         }
 
-        // LEQ
+        // LEQ, if 2nd to top stack value is less than or equal to top of stack value, top of stack is replaced with a 0
         else if (instruction_register.M == 11)
         {
           printf("LEQ");
@@ -244,7 +193,7 @@ int main(int argc, char** argv)
           pas[SP] = !(pas[SP] <= pas[SP + 1]);
         }
 
-        // GTR
+        // GTR, if 2nd to top stack value is greater than the top of stack value, top of stack is replaced with a 0
         else if (instruction_register.M == 12)
         {
           printf("GTR");
@@ -252,7 +201,7 @@ int main(int argc, char** argv)
           pas[SP] = !(pas[SP] > pas[SP + 1]);
         }
 
-        // GEQ
+        // GEQ, if 2nd to top stack value is greater than or equal to top of stack value, top of stack is replaced with a 0
         else if (instruction_register.M == 13)
         {
           printf("GEQ");
@@ -260,6 +209,7 @@ int main(int argc, char** argv)
           pas[SP] = !(pas[SP] >= pas[SP + 1]);
         }
 
+        // Represents and invalid arithmetic  instruction
         else
         {
           Halt = 1;
@@ -267,7 +217,7 @@ int main(int argc, char** argv)
 
         break;
 
-      // LOD, load val to top of stack from offset M of L levels down
+      // LOD, load value to top of stack from offset M of L levels down
       case 3:
         printf("%d ", PC - 3);
         printf("LOD");
@@ -275,7 +225,7 @@ int main(int argc, char** argv)
         pas[SP] = pas[base(instruction_register.L) + instruction_register.M];
         break;
 
-      // STO, store val from top of stack to an index @ offset M from L levels down
+      // STO, store val from top of stack to an index at offset M from L levels down
       case 4:
         printf("%d ", PC - 3);
         printf("STO");
@@ -283,9 +233,9 @@ int main(int argc, char** argv)
         SP = SP - 1;
         break;
 
+      // CAL, calls procedure at index M
+      // Generates new activation record and PC is set to M
       case 5:
-        // CAL, calls procedure (another name for function/method) @ index M
-        // Generates new activation record (???) and PC is set to M
         printf("%d ", PC - 3);
         printf("CAL");
         pas[SP + 1] = base(instruction_register.L);
@@ -295,29 +245,28 @@ int main(int argc, char** argv)
         PC = instruction_register.M;
         break;
 
+      // INC, allocate M number of memory words. First 4 are reserved for:
+      // Static Link, Dynamic Link, Return Address, and Parameter
+      // Increments SP by M
       case 6:
-        // INC, allocate M number of memory words. First 4 are reserved for:
-        // Static Link, Dynamic Link, Return Address, and Parameter
-        // Increment SP by M
         if (is_first_inc)
         {
           STACK_LEN = instruction_register.M;
           is_first_inc = 0;
         }
-        printf("STACK_LEN = %d\n", STACK_LEN);
         printf("%d ", PC - 3);
         printf("INC");
         SP = SP + instruction_register.M;
         break;
 
-      // JMP, jump to instr
+      // JMP, jumps to instruction at index specified by M
       case 7:
         printf("%d ", PC - 3);
         printf("JMP");
         PC = instruction_register.M;
         break;
 
-        // JPC, jump to instr M if top stack val is 1
+      // JPC, if the top of the stack is equal to 1, jumps to instruction at index specified by M
       case 8:
         printf("%d ", PC - 3);
         printf("JPC");
@@ -329,19 +278,20 @@ int main(int argc, char** argv)
         SP = SP - 1;
         break;
 
+      // System Calls
       case 9:
+        // Write top of stack value to screen
         if (instruction_register.M == 1)
         {
-          // Write top stack val to screen
           printf("Output result is: %d\n", pas[SP]);
           SP = SP - 1;
           printf("%d ", PC - 3);
           printf("SYS");
         }
 
+        // Read user input & store at the top of the stack
         else if (instruction_register.M == 2)
         {
-          // Read user input & store @ top of stack
           printf("Please Enter an Integer:\n");
           SP = SP + 1;
           scanf("%d", &pas[SP]);
@@ -350,14 +300,15 @@ int main(int argc, char** argv)
           printf("SYS");
         }
 
+        // End program, set Halt to 0
         else if (instruction_register.M == 3)
         {
-          // End program, set Halt to 0
           Halt = 0;
           printf("%d ", PC - 3);
           printf("SYS");
         }
 
+        // Represents an invalid instruction
         else
         {
           Halt = 1;
@@ -365,32 +316,22 @@ int main(int argc, char** argv)
 
         break;
 
+        // Represents an invalid SYS instruction
         default:
           Halt = 1;
           break;
     }
 
+    // Prints the L and M fields of the current instruction,
+    // along with the current Program Counter, Base Pointer,
+    // and Stack Pointer
     printf("%3d%3d    ", instruction_register.L, instruction_register.M);
     printf("%4d %4d %4d   ", PC, BP, SP);
 
-    // potential issue where SP and BP are equal so it prints nothing
-    // SP starts as the index of the last M value of the last instruction,
-    // while BP is the index after that. If the stack is length 1 then both
-    // SP and BP hold the same index.
-    if (debug)
-      printf("\nSP = %d\nBP = %d\n", SP, BP);
-    //for (i = 0; i <= (SP - BP); i++)
-    //{
-    //  printf("%d ", pas[BP + i]);
-    // }
-    for (int i = instr_end; i <= SP; i++) // print the stack
-    {
-      //printf("%-2d ", pas[i]);
-    }
-
+    // Prints out the stack and following activation records,
+    // separated by the appropriate pipe characters
     for (i = instr_end; i <= SP; i++)
     {
-      //printf("i = %d\n", i);
       printf("%d ", pas[i]);
 
       if (i == instr_end + STACK_LEN -  1)
@@ -406,24 +347,7 @@ int main(int argc, char** argv)
         }
       }
     }
-    //printf("\ninstr_end = %d\nSP = %d\nBP = %d\n", instr_end, SP, BP);
-    //if (instr_end < BP && instruction_register.OP != 5)
-      //;//printf("%2c", '|');
 
-    /*
-    for (i = BP; i < SP; i++)
-    {
-      //if (i == BP)
-      //printf("%2c", '|');
-      printf("%-2d ", pas[i]);
-    }*/
-
-    //printf("\nBP val: %d", pas[BP]);
-    //printf("\nSP val: %d", pas[SP]);
-    // printf("\n");
-    printf("\n");
-    //printIntArr(pas,72);
-    //printIntArr(pas,128);
     printf("\n");
   }
 
