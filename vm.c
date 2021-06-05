@@ -67,19 +67,14 @@ int main(int argc, char** argv)
   BP = SP + 1;
 
   fclose(fp);
-  printf("                PC   BP    SP   stack\n");
-  printf("Initial values: %d    %d    %d\n\n", PC, BP, SP);
+  printf("                  PC   BP    SP   stack\n");
+  printf("Initial values:  %2d    %2d    %2d\n\n", PC, BP, SP);
   while (PC < BP)
   {
     // Fetch Cycle
     instruction_register.OP = pas[PC];
     instruction_register.L = pas[PC + 1];
     instruction_register.M = pas[PC + 2];
-
-    if (PC / 10 == 0)
-    {
-      printf(" ");
-    }
 
     PC = PC + 3;
 
@@ -88,7 +83,7 @@ int main(int argc, char** argv)
     {
       // LIT, pushes literal onto stack
       case 1:
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
         printf("LIT");
         SP = SP + 1;
         pas[SP] = instruction_register.M;
@@ -96,7 +91,7 @@ int main(int argc, char** argv)
 
       // OPR, arithmetic performed using data from top of stack
       case 2:
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
 
         // RTN
         if (instruction_register.M == 0)
@@ -219,7 +214,7 @@ int main(int argc, char** argv)
 
       // LOD, load value to top of stack from offset M of L levels down
       case 3:
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
         printf("LOD");
         SP = SP + 1;
         pas[SP] = pas[base(instruction_register.L) + instruction_register.M];
@@ -227,7 +222,7 @@ int main(int argc, char** argv)
 
       // STO, store val from top of stack to an index at offset M from L levels down
       case 4:
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
         printf("STO");
         pas[base(instruction_register.L) + instruction_register.M] = pas[SP];
         SP = SP - 1;
@@ -236,7 +231,7 @@ int main(int argc, char** argv)
       // CAL, calls procedure at index M
       // Generates new activation record and PC is set to M
       case 5:
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
         printf("CAL");
         pas[SP + 1] = base(instruction_register.L);
         pas[SP + 2] = BP;
@@ -254,21 +249,21 @@ int main(int argc, char** argv)
           STACK_LEN = instruction_register.M;
           is_first_inc = 0;
         }
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
         printf("INC");
         SP = SP + instruction_register.M;
         break;
 
       // JMP, jumps to instruction at index specified by M
       case 7:
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
         printf("JMP");
         PC = instruction_register.M;
         break;
 
       // JPC, if the top of the stack is equal to 1, jumps to instruction at index specified by M
       case 8:
-        printf("%d ", PC - 3);
+        printf("%2d ", PC - 3);
         printf("JPC");
 
         if (pas[SP] == 1)
@@ -285,7 +280,7 @@ int main(int argc, char** argv)
         {
           printf("Output result is: %d\n", pas[SP]);
           SP = SP - 1;
-          printf("%d ", PC - 3);
+          printf("%2d ", PC - 3);
           printf("SYS");
         }
 
@@ -296,7 +291,7 @@ int main(int argc, char** argv)
           SP = SP + 1;
           scanf("%d", &pas[SP]);
           //printf("\n");
-          printf("%d ", PC - 3);
+          printf("%2d ", PC - 3);
           printf("SYS");
         }
 
@@ -304,7 +299,7 @@ int main(int argc, char** argv)
         else if (instruction_register.M == 3)
         {
           Halt = 0;
-          printf("%d ", PC - 3);
+          printf("%2d ", PC - 3);
           printf("SYS");
         }
 
