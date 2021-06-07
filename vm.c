@@ -69,7 +69,7 @@ int main(int argc, char** argv)
   fclose(fp);
   printf("                  PC   BP    SP   stack\n");
   printf("Initial values:  %2d    %2d    %2d\n\n", PC, BP, SP);
-  while (PC < BP)
+  while (PC < instr_end)
   {
     // Fetch Cycle
     instruction_register.OP = pas[PC];
